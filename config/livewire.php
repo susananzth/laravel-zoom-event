@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'class_namespace' => 'App\\Livewire',
+    'class_namespace' => 'App\\Http\\Livewire',
 
     /*
     |---------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'layout' => 'components.layouts.app',
+    'layout' => 'layouts.app',
 
     /*
     |---------------------------------------------------------------------------

@@ -17,6 +17,9 @@ class UserSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        $user->roles()->detach();
+        $user->roles()->attach(1);
+
         User::factory(10)->create();
     }
 }

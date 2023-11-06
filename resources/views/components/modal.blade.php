@@ -1,5 +1,4 @@
-<div x-data="{ open: @entangle($attributes->wire('model')).defer }" x-show="open" @keydown.escape.window="open = false"
-    class="fixed z-50 inset-0 overflow-y-auto">
+<div x-data="{ open: true }" x-show="open" @keydown.escape.window="open = false" x-cloak class="fixed z-50 inset-0 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen px-4 text-center">
         <div x-show="open" class="fixed inset-0 bg-gray-800 bg-opacity-50 transition-opacity"></div>
         <div x-show="open"
