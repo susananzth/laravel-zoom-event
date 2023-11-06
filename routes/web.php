@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get   ('/role',     Roles::class                         )->name('roles');
     Route::get   ('/user',     Users::class                         )->name('users');
 });
 

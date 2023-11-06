@@ -97,38 +97,7 @@
                     <span>{{ __('Users') }}</span>
                 </x-responsive-nav-link>
                 @endcan
-                @can('document_type_index')
-                <x-responsive-nav-link :href="route('document_types')" :active="request()->routeIs('document_type.index')" class="flex flex-row">
-                    <div class="basis-6">
-                        <i class="fa-solid fa-id-card"></i>
-                    </div>
-                    <span>{{ __('Document Types') }}</span>
-                </x-responsive-nav-link>
-                @endcan
-                @can('country_index')
-                <x-responsive-nav-link :href="route('countries')" :active="request()->routeIs('country.index')" class="flex flex-row">
-                    <div class="basis-6">
-                        <i class="fa-solid fa-earth-americas"></i>
-                    </div>
-                    <span>{{ __('Countries') }}</span>
-                </x-responsive-nav-link>
-                @endcan
-                @can('state_index')
-                <x-responsive-nav-link :href="route('states')" :active="request()->routeIs('state.index')" class="flex flex-row">
-                    <div class="basis-6">
-                        <i class="fa-solid fa-map-location-dot"></i>
-                    </div>
-                    <span>{{ __('States') }}</span>
-                </x-responsive-nav-link>
-                @endcan
-                @can('city_index')
-                <x-responsive-nav-link :href="route('cities')" :active="request()->routeIs('city.index')" class="flex flex-row">
-                    <div class="basis-6">
-                        <i class="fa-solid fa-city"></i>
-                    </div>
-                    <span>{{ __('Cities') }}</span>
-                </x-responsive-nav-link>
-                @endcan
+                
                 @can('role_index')
                 <x-responsive-nav-link :href="route('roles')" :active="request()->routeIs('role.index')" class="flex flex-row">
                     <div class="basis-6">
