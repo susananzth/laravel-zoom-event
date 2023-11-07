@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\DocumentTypes;
 use App\Http\Livewire\Roles;
 use App\Http\Livewire\Users;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::get   ('/role',     Roles::class                         )->name('roles');
+    Route::get   ('/document', DocumentTypes::class                 )->name('document_types');
     Route::get   ('/user',     Users::class                         )->name('users');
 });
 

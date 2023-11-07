@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -19,7 +20,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'document_type_id',
+        'document_number',
+        'phone',
         'email',
         'password',
         'status',
@@ -53,6 +58,14 @@ class User extends Authenticatable
                 $user->roles()->attach(3);
             }
         });
+    }
+
+    /**
+     * Get the document_type that owns the user.
+     */
+    public function document_type(): BelongsTo
+    {
+        return $this->belongsTo(DocumentType::class);
     }
 
     /**

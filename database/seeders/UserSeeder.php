@@ -13,8 +13,9 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'first_name' => 'Test',
+            'last_name'  => 'User',
+            'email'      => 'test@example.com',
         ]);
 
         $user->roles()->detach();
