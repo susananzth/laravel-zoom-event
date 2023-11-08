@@ -54,7 +54,7 @@
                     transition duration-150 ease-in-out">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-txtdark-500 dark:text-txtdark-400 bg-white dark:bg-secondary-800 hover:text-txtdark-700 dark:hover:text-txtdark-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::user()->first_name }}</div>
                             <div class="ml-1 text-xs">
                                 <i class="fa-solid fa-chevron-down"></i>
                             </div>
