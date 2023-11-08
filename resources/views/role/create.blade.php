@@ -24,7 +24,7 @@
                 <div class="border">
                     <button type="button"
                         x-on:click="openMenus.includes('{{ $itemMenu }}') ? openMenus = openMenus.filter(item => item !== '{{ $itemMenu }}') : openMenus.push('{{ $itemMenu }}')"
-                        class="w-full text-left px-4 py-2 bg-gray-200">
+                        class="w-full text-left px-4 py-2 bg-secondary-200">
                         {{ __($itemMenu) }}
                     </button>
                     <div x-show="openMenus.includes('{{ $itemMenu }}')" class="p-4 space-y-2">
