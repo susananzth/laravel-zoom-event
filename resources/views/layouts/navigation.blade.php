@@ -113,6 +113,22 @@
                     <span>{{ __('Countries') }}</span>
                 </x-responsive-nav-link>
                 @endcan
+                @can('state_index')
+                <x-responsive-nav-link :href="route('states')" :active="request()->routeIs('states')" class="flex flex-row">
+                    <div class="basis-6">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <span>{{ __('States') }}</span>
+                </x-responsive-nav-link>
+                @endcan
+                @can('city_index')
+                <x-responsive-nav-link :href="route('cities')" :active="request()->routeIs('cities')" class="flex flex-row">
+                    <div class="basis-6">
+                        <i class="fa-solid fa-city"></i>
+                    </div>
+                    <span>{{ __('Cities') }}</span>
+                </x-responsive-nav-link>
+                @endcan
                 @can('currency_index')
                 <x-responsive-nav-link :href="route('currencies')" :active="request()->routeIs('currencies')" class="flex flex-row">
                     <div class="basis-6">
