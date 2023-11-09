@@ -89,6 +89,12 @@
     "Create new city": "Crear nuevo ciudad",
     "Edit City": "Editar Ciudad",
     "Delete City": "Eliminar Ciudad",
+    "Currency": "Moneda",
+    "Currencies": "Monedas",
+    "Create Currency": "Crear Moneda",
+    "Create new currency": "Crear nuevo moneda",
+    "Edit Currency": "Editar Moneda",
+    "Delete Currency": "Eliminar Moneda",
     "Document Type": "Tipo de Documento",
     "Document Types": "Tipo de Documentos",
     "Create Document Type": "Crear Tipo de Documento",
@@ -99,5 +105,6 @@
     "Fields marked with * are required": "Los campos marcados con * son obligatorios",
     "Are you sure you want to delete the record?": "¿Está seguro(a) de eliminar el registro?",
     "Once the record is deleted, all data will be permanently erased.": "Una vez eliminado el registro, todos los datos se borrarán permanentemente.",
-    "Whoops! Something went wrong.": "¡Ups! Algo ha salido mal."
+    "Whoops! Something went wrong.": "¡Ups! Algo ha salido mal.",
+    "There are no records to show": "No hay registros para mostrar"
 }

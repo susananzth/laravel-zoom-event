@@ -113,6 +113,14 @@
                     <span>{{ __('Countries') }}</span>
                 </x-responsive-nav-link>
                 @endcan
+                @can('currency_index')
+                <x-responsive-nav-link :href="route('currencies')" :active="request()->routeIs('currencies')" class="flex flex-row">
+                    <div class="basis-6">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                    <span>{{ __('Currencies') }}</span>
+                </x-responsive-nav-link>
+                @endcan
                 @can('role_index')
                 <x-responsive-nav-link :href="route('roles')" :active="request()->routeIs('roles')" class="flex flex-row">
                     <div class="basis-6">

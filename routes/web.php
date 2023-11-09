@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Countries;
+use App\Http\Livewire\Currencies;
 use App\Http\Livewire\DocumentTypes;
 use App\Http\Livewire\Roles;
 use App\Http\Livewire\Users;
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::get('/country',  Countries::class    )->name('countries');
+    Route::get('/currency', Currencies::class   )->name('currencies');
     Route::get('/document', DocumentTypes::class)->name('document_types');
     Route::get('/role',     Roles::class        )->name('roles');
     Route::get('/user',     Users::class        )->name('users');
