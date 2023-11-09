@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Countries;
 use App\Http\Livewire\DocumentTypes;
 use App\Http\Livewire\Roles;
 use App\Http\Livewire\Users;
@@ -22,8 +23,8 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get   ('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch ('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -31,9 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get   ('/role',     Roles::class                         )->name('roles');
-    Route::get   ('/document', DocumentTypes::class                 )->name('document_types');
-    Route::get   ('/user',     Users::class                         )->name('users');
+    Route::get('/country',  Countries::class    )->name('countries');
+    Route::get('/document', DocumentTypes::class)->name('document_types');
+    Route::get('/role',     Roles::class        )->name('roles');
+    Route::get('/user',     Users::class        )->name('users');
 });
 
 require __DIR__.'/auth.php';

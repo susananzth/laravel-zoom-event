@@ -105,6 +105,14 @@
                     <span>{{ __('Document Types') }}</span>
                 </x-responsive-nav-link>
                 @endcan
+                @can('country_index')
+                <x-responsive-nav-link :href="route('countries')" :active="request()->routeIs('countries')" class="flex flex-row">
+                    <div class="basis-6">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <span>{{ __('Countries') }}</span>
+                </x-responsive-nav-link>
+                @endcan
                 @can('role_index')
                 <x-responsive-nav-link :href="route('roles')" :active="request()->routeIs('roles')" class="flex flex-row">
                     <div class="basis-6">
