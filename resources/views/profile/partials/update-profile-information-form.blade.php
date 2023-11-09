@@ -30,6 +30,21 @@
             <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
         </div>
         <div>
+            <x-input-label for="document_type_id">{{ __('Document number') }} *</x-input-label>
+            <x-select-input id="document_type_id" class="block mt-1 w-full" 
+                name="document_type_id" autocomplete="document_type_id" required>
+                <option value="">{{ __('Please select') }}</option>
+                @foreach ($documents as $item)
+                    @if ($user->document_type_id == $item->id)
+                    <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                    @else
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endif
+                @endforeach
+            </x-select-input>
+            <x-input-error :messages="$errors->get('document_type_id')" class="mt-2" />
+        </div>
+        <div>
             <x-input-label for="document_number">{{ __('Document number') }} *</x-input-label>
             <x-text-input id="document_number" name="document_number" type="text" 
                 class="mt-1 block w-full" :value="old('document_number', $user->document_number)" 

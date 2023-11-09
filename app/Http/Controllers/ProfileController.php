@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentType;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,9 +17,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $data['documents']  = DocumentType::orderBy('name', 'asc')->get();
+        $data['user']       = $request->user();
+        return view('profile.edit', $data);
     }
 
     /**
@@ -35,7 +36,7 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')
-            ->with('message', trans('message.Updated Successfully.', ['name' => __('Password')]))
+            ->with('message', trans('message.Updated Successfully.', ['name' => __('Profile Information')]))
             ->with('alert_class', 'success');
     }
 
