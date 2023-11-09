@@ -191,4 +191,10 @@ return [
         'en' => 'English',
         'es' => 'Spainsh',
     ],
+
+    'logo' => env('APP_LOGO', 'logo.png'),
+
+    'author' => env('APP_AUTHOR', config('app.name')),
+
+    'year_copyright' => env('APP_YEAR_COPYRIGHT', date('Y')),
 ];

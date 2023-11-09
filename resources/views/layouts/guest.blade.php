@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Susananzth') }}</title>
+        <title>{{ config('app.name') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -23,7 +23,7 @@
                         <div class="shrink-0 flex items-center">
                             <a href="{{ '/' }}" class="flex items-center">
                                 <x-application-logo class="block h-9 w-auto fill-current text-txtdark-800 dark:text-txtdark-200" />
-                                <span class="font-medium dark:text-txtdark-200 px-2">Susananzth</span>
+                                <span class="font-medium dark:text-txtdark-200 px-2">{{ config('app.name') }}</span>
                             </a>
                         </div>
                     </div>

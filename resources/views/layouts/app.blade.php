@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Susananzth') }}</title>
+        <title>{{ config('app.name') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -34,9 +34,9 @@
                 <footer
                     class="text-center border-t lg:text-left">
                     <div class="p-4 text-center text-txtdark-700 dark:text-txtdark-200">
-                        © 2020 - 2023 Copyright:
+                        © {{ config('app.year_copyright') }} Copyright:
                         <a class="text-txtdark-800 dark:text-txtdark-400"
-                        href="https://tailwind-elements.com/">Susana Piñero Rodríguez</a>
+                        href="https://tailwind-elements.com/">{{ config('app.author') }}</a>
                     </div>
                 </footer>
             </div>

@@ -13,7 +13,7 @@
                     </button>
                     <a href="{{ '/' }}" class="flex items-center">
                         <x-application-logo class="block h-9 w-auto fill-current text-txtdark-800 dark:text-txtdark-200" />
-                        <span class="font-medium dark:text-txtdark-200 px-2">Susananzth</span>
+                        <span class="font-medium dark:text-txtdark-200 px-2">{{ config('app.name') }}</span>
                     </a>
                 </div>
             </div>
