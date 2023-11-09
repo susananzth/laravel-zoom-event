@@ -114,7 +114,7 @@ class Users extends Component
 
         if (!$user) {
             session()->flash('error','User not found');
-            $this->dispatch('render');
+            return redirect()->to('/user');
         } else {
             $this->resetValidationAndFields();
             $this->user_id          = $user->id;
@@ -175,7 +175,7 @@ class Users extends Component
         $user = User::find($id);
         if (!$user) {
             session()->flash('error','User not found');
-            $this->dispatch('render');
+            return redirect()->to('/user');
         } else {
             $this->user_id = $user->id;
             $this->resetValidationAndFields();

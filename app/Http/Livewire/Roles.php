@@ -126,7 +126,7 @@ class Roles extends Component
 
         if (!$role) {
             session()->flash('error','Role not found');
-            $this->dispatch('render');
+            return redirect()->to('/role');
         } else {
             $this->resetValidationAndFields();
             $this->role_id = $role->id;
@@ -201,7 +201,7 @@ class Roles extends Component
         $role = Role::find($id);
         if (!$role) {
             session()->flash('error','Role not found');
-            $this->dispatch('render');
+            return redirect()->to('/role');
         } else {
             $this->role_id = $role->id;
             $this->addRol = false;

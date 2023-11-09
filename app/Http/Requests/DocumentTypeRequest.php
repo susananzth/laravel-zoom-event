@@ -22,7 +22,7 @@ class DocumentTypeRequest extends FormRequest
     public static function rules($documentTypeId = null): array
     {
         $baseRules = [
-            'name'   => ['required', 'string', 'max:255'],
+            'name'   => ['required', 'string', 'max:100'],
         ];
 
         if ($documentTypeId) {

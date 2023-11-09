@@ -98,7 +98,7 @@ class DocumentTypes extends Component
 
         if (!$document_type) {
             session()->flash('error','Document Type not found');
-            $this->emit('render');
+            return redirect()->to('/document');
         } else {
             $this->resetValidationAndFields();
             $this->document_type_id   = $document_type->id;
@@ -145,7 +145,7 @@ class DocumentTypes extends Component
         $document_type = DocumentType::find($id);
         if (!$document_type) {
             session()->flash('error','Document Type not found');
-            $this->emit('render');
+            return redirect()->to('/document');
         } else {
             $this->document_type_id = $document_type->id;
             $this->resetValidationAndFields();
