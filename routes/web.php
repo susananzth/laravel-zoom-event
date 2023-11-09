@@ -35,10 +35,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/city',     Cities::class       )->name('cities');
     Route::get('/country',  Countries::class    )->name('countries');
     Route::get('/currency', Currencies::class   )->name('currencies');
     Route::get('/document', DocumentTypes::class)->name('document_types');
     Route::get('/role',     Roles::class        )->name('roles');
+    Route::get('/state',    States::class       )->name('states');
     Route::get('/user',     Users::class        )->name('users');
 });
 
