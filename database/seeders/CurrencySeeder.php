@@ -29,7 +29,7 @@ class CurrencySeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Dollar Estadounidense',
+                'name' => 'Dolar Estadounidense',
                 'iso_4' => 'USD',
                 'symbol' => '$',
                 'created_at' => now(),
