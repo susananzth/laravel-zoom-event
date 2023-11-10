@@ -24,6 +24,7 @@ class User extends Authenticatable
         'last_name',
         'document_type_id',
         'document_number',
+        'phone_code_id',
         'phone',
         'email',
         'password',
@@ -66,6 +67,14 @@ class User extends Authenticatable
     public function document_type(): BelongsTo
     {
         return $this->belongsTo(DocumentType::class);
+    }
+
+    /**
+     * Get the phone_code that owns the user.
+     */
+    public function phone_code(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'phone_code_id');
     }
 
     /**

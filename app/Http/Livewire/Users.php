@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use DB;
 use App\Http\Requests\UserRequest;
+use App\Models\Country;
 use App\Models\DocumentType;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,7 +17,7 @@ class Users extends Component
 {
     use WithPagination;
 
-    public $first_name, $last_name, $documents, $document_type_id, $document_number, $phone, $email, $password, $password_confirmation, $user_id;
+    public $first_name, $last_name, $documents, $document_type_id, $document_number, $phone_codes, $phone_code_id, $phone, $email, $password, $password_confirmation, $user_id;
     public $addUser = false, $updateUser = false, $deleteUser = false;
 
     protected $listeners = ['render'];
@@ -32,6 +34,8 @@ class Users extends Component
         $this->documents = '';
         $this->document_type_id = '';
         $this->document_number = '';
+        $this->phone_codes = '';
+        $this->phone_code_id = '';
         $this->phone = '';
         $this->email = '';
         $this->password = '';
@@ -70,6 +74,7 @@ class Users extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->phone_codes  = Country::orderBy('name', 'asc')->get();
         $this->documents  = DocumentType::orderBy('name', 'asc')->get();
         $this->addUser = true;
         return view('user.create');
@@ -86,12 +91,13 @@ class Users extends Component
 
         DB::beginTransaction();
         $user = User::create([
-            'first_name'       => $this->first_name,
-            'last_name'        => $this->last_name,
+            'first_name'       => Str::title($this->first_name),
+            'last_name'        => Str::title($this->last_name),
             'document_type_id' => $this->document_type_id,
             'document_number'  => $this->document_number,
+            'phone_code_id'    => $this->phone_code_id,
             'phone'            => $this->phone,
-            'email'            => $this->email,
+            'email'            => Str::lower($this->email),
             'password'         => Hash::make($this->password),
         ]);
         $user->save();
@@ -123,6 +129,8 @@ class Users extends Component
             $this->documents        = DocumentType::orderBy('name', 'asc')->get();
             $this->document_type_id = $user->document_type_id;
             $this->document_number  = $user->document_number;
+            $this->phone_codes      = Country::orderBy('name', 'asc')->get();
+            $this->phone_code_id    = $user->phone_code_id;
             $this->phone            = $user->phone;
             $this->email            = $user->email;
             $this->updateUser       = true;
@@ -142,12 +150,13 @@ class Users extends Component
 
         DB::beginTransaction();
         $user = User::find($this->user_id);
-        $user->first_name       = $this->first_name;
-        $user->last_name        = $this->last_name;
+        $user->first_name       = Str::title($this->first_name);
+        $user->last_name        = Str::title($this->last_name);
         $user->document_type_id = $this->document_type_id;
         $user->document_number  = $this->document_number;
+        $user->phone_code_id    = $this->phone_code_id;
         $user->phone            = $this->phone;
-        $user->email            = $this->email;
+        $user->email            = Str::lower($this->email);
         if (isset($this->password) || $this->password != '') {
             $user->password = Hash::make($this->password);
         }

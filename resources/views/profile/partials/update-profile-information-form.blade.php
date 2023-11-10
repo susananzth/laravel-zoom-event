@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="grid grid-cols-2 gap-4">
         @csrf
         @method('patch')
 
@@ -32,7 +32,7 @@
         <div>
             <x-input-label for="document_type_id">{{ __('Document number') }} *</x-input-label>
             <x-select-input id="document_type_id" class="block mt-1 w-full" 
-                name="document_type_id" autocomplete="document_type_id" required>
+                name="document_type_id" required>
                 <option value="">{{ __('Please select') }}</option>
                 @foreach ($documents as $item)
                     @if ($user->document_type_id == $item->id)
@@ -48,8 +48,23 @@
             <x-input-label for="document_number">{{ __('Document number') }} *</x-input-label>
             <x-text-input id="document_number" name="document_number" type="text" 
                 class="mt-1 block w-full" :value="old('document_number', $user->document_number)" 
-                required autocomplete="document_number" />
+                maxlength="50" required />
             <x-input-error class="mt-2" :messages="$errors->get('document_number')" />
+        </div>
+        <div>
+            <x-input-label for="phone_code_id">{{ __('Phone code') }} *</x-input-label>
+            <x-select-input id="phone_code_id" class="block mt-1 w-full" 
+                name="phone_code_id" required>
+                <option value="">{{ __('Please select') }}</option>
+                @foreach ($phone_codes as $item)
+                    @if ($user->phone_code_id == $item->id)
+                    <option value="{{ $item->id }}" selected>+{{ $item->phone_code }}</option>
+                    @else
+                    <option value="{{ $item->id }}">+{{ $item->phone_code }}</option>
+                    @endif
+                @endforeach
+            </x-select-input>
+            <x-input-error :messages="$errors->get('phone_code_id')" class="mt-2" />
         </div>
         <div>
             <x-input-label for="phone">{{ __('Phone') }} *</x-input-label>
@@ -59,7 +74,7 @@
             <x-input-error class="mt-2" :messages="$errors->get('phone')" />
         </div>
 
-        <div>
+        <div class="col-span-2">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -83,7 +98,7 @@
             @endif
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center col-span-2 gap-4">
             <x-primary-button>
                 <i class="fa-solid fa-save me-1"></i>{{ __('Update') }}
             </x-primary-button>

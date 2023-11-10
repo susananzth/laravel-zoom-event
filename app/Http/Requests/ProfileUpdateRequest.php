@@ -20,8 +20,9 @@ class ProfileUpdateRequest extends FormRequest
             'last_name'        => ['required', 'string', 'max:150'],
             'document_type_id' => ['required', 'integer', 'exists:document_types,id'],
             'document_number'  => ['required', 'string', 'max:50'],
+            'phone_code_id'    => ['required', 'integer', 'exists:countries,id'],
             'phone'            => ['required', 'string', 'max:50'],
-            'email'            => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'email'            => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
         ];
     }
 }
