@@ -31,10 +31,12 @@ class UserRequest extends FormRequest
             'phone'            => ['required', 'string', 'max:50'],
             'email'            => ['required', 'string', 'email', 'max:255'],
             'password'         => ['nullable', 'confirmed', Password::defaults()],
+            'status'           => ['nullable']
         ];
 
         if ($userId) {
             $baseRules['email'][] = 'unique:users,email,' . $userId;
+            $baseRules['status'][] = ['required', 'boolean'];
         } else {
             $baseRules['email'][] = 'unique:users,email';
         }

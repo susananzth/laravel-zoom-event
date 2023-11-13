@@ -17,7 +17,7 @@ class Users extends Component
 {
     use WithPagination;
 
-    public $first_name, $last_name, $documents, $document_type_id, $document_number, $phone_codes, $phone_code_id, $phone, $email, $password, $password_confirmation, $user_id;
+    public $first_name, $last_name, $documents, $document_type_id, $document_number, $phone_codes, $phone_code_id, $phone, $status, $email, $password, $password_confirmation, $user_id;
     public $addUser = false, $updateUser = false, $deleteUser = false;
 
     protected $listeners = ['render'];
@@ -37,6 +37,7 @@ class Users extends Component
         $this->phone_codes = '';
         $this->phone_code_id = '';
         $this->phone = '';
+        $this->status = '';
         $this->email = '';
         $this->password = '';
         $this->password_confirmation = '';
@@ -132,6 +133,7 @@ class Users extends Component
             $this->phone_codes      = Country::orderBy('name', 'asc')->get();
             $this->phone_code_id    = $user->phone_code_id;
             $this->phone            = $user->phone;
+            $this->status           = $user->status;
             $this->email            = $user->email;
             $this->updateUser       = true;
             return view('user.edit');
@@ -156,6 +158,7 @@ class Users extends Component
         $user->document_number  = $this->document_number;
         $user->phone_code_id    = $this->phone_code_id;
         $user->phone            = $this->phone;
+        $user->status           = $this->status;
         $user->email            = Str::lower($this->email);
         if (isset($this->password) || $this->password != '') {
             $user->password = Hash::make($this->password);

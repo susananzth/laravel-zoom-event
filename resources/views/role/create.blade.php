@@ -11,7 +11,7 @@
             <x-text-input id="title" name="title" type="text"
                 class="mt-1 block w-full" maxlength="150"
                 wire:model="title"
-                required autofocus autocomplete="title" />
+                required autofocus autocomplete="off" />
             <x-input-error class="mt-2" :messages="$errors->get('title')" />
         </div>
         <div>

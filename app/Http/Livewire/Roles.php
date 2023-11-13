@@ -14,7 +14,7 @@ class Roles extends Component
 {
     use WithPagination;
 
-    public $permissions, $title, $role_id;
+    public $permissions, $title, $status, $role_id;
     public $updateRol = false, $addRol = false, $deleteRol = false, $selectedPermissions = [];
 
     protected $listeners = ['render'];
@@ -28,6 +28,7 @@ class Roles extends Component
     {
         $this->title = '';
         $this->permissions = '';
+        $this->status = '';
         $this->selectedPermissions = [];
     }
 
@@ -131,6 +132,7 @@ class Roles extends Component
             $this->resetValidationAndFields();
             $this->role_id = $role->id;
             $this->title   = $role->title;
+            $this->status  = $role->status;
             $this->selectedPermissions = $role->permissions()->pluck('permissions.id')->toArray();
             $this->updateRol  = true;
             $list_permissions = Permission::orderBy('menu', 'asc')->get();
@@ -174,7 +176,8 @@ class Roles extends Component
 
         DB::beginTransaction();
         $role = Role::findOrFail($this->role_id);
-        $role->title = $this->title;
+        $role->title  = $this->title;
+        $role->status = $this->status;
         $role->permissions()->detach();
         $role->permissions()->attach($this->selectedPermissions);
         $role->save();

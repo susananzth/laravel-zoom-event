@@ -13,7 +13,7 @@ class DocumentTypes extends Component
 {
     use WithPagination;
 
-    public $name, $document_type_id;
+    public $name, $status, $document_type_id;
     public $addDocumentType = false, $updateDocumentType = false, $deleteDocumentType = false;
 
     protected $listeners = ['render'];
@@ -26,6 +26,7 @@ class DocumentTypes extends Component
     public function resetFields()
     {
         $this->name = '';
+        $this->status = '';
     }
 
     public function resetValidationAndFields()
@@ -103,6 +104,7 @@ class DocumentTypes extends Component
             $this->resetValidationAndFields();
             $this->document_type_id   = $document_type->id;
             $this->name               = $document_type->name;
+            $this->status             = $document_type->status;
             $this->updateDocumentType = true;
             return view('document_type.edit');
         }
@@ -119,8 +121,9 @@ class DocumentTypes extends Component
         $this->validate();
 
         DB::beginTransaction();
-        $document_type       = DocumentType::find($this->document_type_id);
-        $document_type->name = $this->name;
+        $document_type         = DocumentType::find($this->document_type_id);
+        $document_type->name   = $this->name;
+        $document_type->status = $this->status;
         $document_type->save();
         DB::commit();
         session()->flash('message', trans('message.Updated Successfully.', ['name' => __('Document Type')]));

@@ -23,11 +23,12 @@ class DocumentTypeRequest extends FormRequest
     {
         $baseRules = [
             'name'   => ['required', 'string', 'max:100'],
+            'status' => ['nullable']
         ];
 
         if ($documentTypeId) {
             $baseRules['name'][] = 'unique:document_types,name,' . $documentTypeId;
-            $baseRules['status'][] = 'required,boolean';
+            $baseRules['status'][] = ['required', 'boolean'];
         } else {
             $baseRules['name'][] = 'unique:document_types,name';
         }

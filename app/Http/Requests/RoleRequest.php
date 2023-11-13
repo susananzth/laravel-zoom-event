@@ -23,10 +23,12 @@ class RoleRequest extends FormRequest
     {
         $baseRules = [
             'title' => ['required', 'string', 'max:150'],
+            'status' => ['nullable']
         ];
 
         if ($roleId) {
             $baseRules['title'][] = 'unique:roles,title,' . $roleId;
+            $baseRules['status'][] = ['required', 'boolean'];
         } else {
             $baseRules['title'][] = 'unique:roles,title';
         }

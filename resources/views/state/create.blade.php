@@ -21,14 +21,14 @@
             <x-input-label for="name">{{ __('Name') }} *</x-input-label>
             <x-text-input id="name" class="block mt-1 w-full" type="text"
                 name="name" :value="old('name')" wire:model="name"
-                autocomplete="name" maxlength="200" required autofocus />
+                autocomplete="off" maxlength="200" required autofocus />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
         <div>
             <x-input-label for="" :value="__('ISO 2')" />
             <x-text-input id="iso_2" class="block mt-1 w-full" type="text"
                 name="iso_2" :value="old('iso_2')" wire:model="iso_2"
-                maxlength="4" />
+                maxlength="4" autocomplete="off" />
             <x-input-error :messages="$errors->get('iso_2')" class="mt-2" />
         </div>
 

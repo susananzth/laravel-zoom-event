@@ -19,6 +19,7 @@
                                 <th scope="col" class="border-r border-secondary-700 px-6 py-4">{{ __('Name') }}</th>
                                 <th scope="col" class="border-r border-secondary-700 px-6 py-4">{{ __('Created at') }}</th>
                                 <th scope="col" class="border-r border-secondary-700 px-6 py-4">{{ __('Updated at') }}</th>
+                                <th scope="col" class="border-r border-secondary-700 px-6 py-4">{{ __('Status') }}</th>
                                 <th scope="col" class="px-6 py-4">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
@@ -29,6 +30,19 @@
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $document_type->name }}</td>
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $document_type->created_at }}</td>
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $document_type->updated_at }}</td>
+                                <td class="whitespace-nowrap border-r px-6 py-4">
+                                    @if ($document_type->status == true)
+                                        <span
+                                            class="inline-block whitespace-nowrap rounded-full bg-emerald-400 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white">
+                                            {{ __('Active') }}
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-block whitespace-nowrap rounded-full bg-red-400 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white">
+                                            {{ __('Inactive') }}
+                                        </span>
+                                    @endif
+                                </td>
                                 <td class="whitespace-nowrap text-center px-6 py-4">
                                     <a href="#" wire:click="edit({{ $document_type->id }})" class="me-1">
                                         <i class="fa-solid fa-edit"></i>

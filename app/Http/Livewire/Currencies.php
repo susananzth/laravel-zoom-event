@@ -30,7 +30,6 @@ class Currencies extends Component
         $this->iso_4 = '';
         $this->symbol = '';
         $this->countries = '';
-        $this->currency_id = '';
     }
 
     public function resetValidationAndFields()
