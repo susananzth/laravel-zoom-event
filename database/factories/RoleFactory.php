@@ -18,6 +18,7 @@ class RoleFactory extends Factory
     {
         return [
             'title' => fake()->text(25),
+            'status' => true,
         ];
     }
 }

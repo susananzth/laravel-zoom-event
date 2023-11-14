@@ -103,10 +103,10 @@ class Users extends Component
         ]);
         $user->save();
         DB::commit();
-        session()->flash('message', trans('message.Created Successfully.', ['name' => __('User')]));
-        session()->flash('alert_class', 'success');
 
-        return redirect()->to('/user');
+        return redirect()->route('users')
+            ->with('message', trans('message.Created Successfully.', ['name' => __('User')]))
+            ->with('alert_class', 'success');
     }
 
     public function edit($id)
@@ -120,24 +120,24 @@ class Users extends Component
         $user = User::find($id);
 
         if (!$user) {
-            session()->flash('error','User not found');
-            return redirect()->to('/user');
-        } else {
-            $this->resetValidationAndFields();
-            $this->user_id          = $user->id;
-            $this->first_name       = $user->first_name;
-            $this->last_name        = $user->last_name;
-            $this->documents        = DocumentType::orderBy('name', 'asc')->get();
-            $this->document_type_id = $user->document_type_id;
-            $this->document_number  = $user->document_number;
-            $this->phone_codes      = Country::orderBy('name', 'asc')->get();
-            $this->phone_code_id    = $user->phone_code_id;
-            $this->phone            = $user->phone;
-            $this->status           = $user->status;
-            $this->email            = $user->email;
-            $this->updateUser       = true;
-            return view('user.edit');
+            return redirect()->route('users')
+                ->with('message', __('User not found'))
+                ->with('alert_class', 'danger');
         }
+        $this->resetValidationAndFields();
+        $this->user_id          = $user->id;
+        $this->first_name       = $user->first_name;
+        $this->last_name        = $user->last_name;
+        $this->documents        = DocumentType::orderBy('name', 'asc')->get();
+        $this->document_type_id = $user->document_type_id;
+        $this->document_number  = $user->document_number;
+        $this->phone_codes      = Country::orderBy('name', 'asc')->get();
+        $this->phone_code_id    = $user->phone_code_id;
+        $this->phone            = $user->phone;
+        $this->status           = $user->status;
+        $this->email            = $user->email;
+        $this->updateUser       = true;
+        return view('user.edit');
     }
 
     public function update()
@@ -150,8 +150,14 @@ class Users extends Component
 
         $this->validate();
 
-        DB::beginTransaction();
         $user = User::find($this->user_id);
+        if (!$user) {
+            return redirect()->route('users')
+                ->with('message', __('User not found'))
+                ->with('alert_class', 'danger');
+        }
+
+        DB::beginTransaction();
         $user->first_name       = Str::title($this->first_name);
         $user->last_name        = Str::title($this->last_name);
         $user->document_type_id = $this->document_type_id;
@@ -165,10 +171,10 @@ class Users extends Component
         }
         $user->save();
         DB::commit();
-        session()->flash('message', trans('message.Updated Successfully.', ['name' => __('User')]));
-        session()->flash('alert_class', 'success');
 
-        return redirect()->to('/user');
+        return redirect()->route('users')
+            ->with('message', trans('message.Updated Successfully.', ['name' => __('User')]))
+            ->with('alert_class', 'success');
     }
 
     public function cancel()
@@ -186,13 +192,13 @@ class Users extends Component
 
         $user = User::find($id);
         if (!$user) {
-            session()->flash('error','User not found');
-            return redirect()->to('/user');
-        } else {
-            $this->user_id = $user->id;
-            $this->resetValidationAndFields();
-            $this->deleteUser = true;
+            return redirect()->route('users')
+                ->with('message', __('User not found'))
+                ->with('alert_class', 'danger');
         }
+        $this->user_id = $user->id;
+        $this->resetValidationAndFields();
+        $this->deleteUser = true;
     }
 
     public function delete()
@@ -202,12 +208,19 @@ class Users extends Component
                 ->with('message', trans('message.You do not have the necessary permissions to execute the action.'))
                 ->with('alert_class', 'danger');
         }
-        DB::beginTransaction();
-        User::findOrFail($this->user_id)->delete();
-        DB::commit();
-        session()->flash('message', trans('message.Deleted Successfully.', ['name' => __('User')]));
-        session()->flash('alert_class', 'success');
 
-        return redirect()->to('/user');
+        $user = User::find($this->user_id);
+        if (!$user) {
+            return redirect()->route('users')
+                ->with('message', __('User not found'))
+                ->with('alert_class', 'danger');
+        }
+        DB::beginTransaction();
+        $user->delete();
+        DB::commit();
+
+        return redirect()->route('users')
+            ->with('message', trans('message.Deleted Successfully.', ['name' => __('User')]))
+            ->with('alert_class', 'success');
     }
 }
