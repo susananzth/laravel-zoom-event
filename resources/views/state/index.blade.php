@@ -30,10 +30,10 @@
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $state->iso_2 }}</td>
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $state->country->name }}</td>
                                 <td class="whitespace-nowrap text-center px-6 py-4">
-                                    <a href="#" wire:click="edit({{ $state->id }})" class="me-1">
+                                    <a href="#" wire:key="edit-{{ $state->id }}" wire:click="edit({{ $state->id }})" class="me-1">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>
-                                    <a href="#" wire:click="setDeleteId({{ $state->id }})">
+                                    <a href="#" wire:key="delete-{{ $state->id }}" wire:click="setDeleteId({{ $state->id }})">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </td>

@@ -30,10 +30,10 @@
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $currency->iso_4 }}</td>
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $currency->symbol }}</td>
                                 <td class="whitespace-nowrap text-center px-6 py-4">
-                                    <a href="#" wire:click="edit({{ $currency->id }})" class="me-1">
+                                    <a href="#" wire:key="edit-{{ $currency->id }}" wire:click="edit({{ $currency->id }})" class="me-1">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>
-                                    <a href="#" wire:click="setDeleteId({{ $currency->id }})">
+                                    <a href="#" wire:key="delete-{{ $currency->id }}" wire:click="setDeleteId({{ $currency->id }})">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </td>

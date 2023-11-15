@@ -44,10 +44,10 @@
                                     @endif
                                 </td>
                                 <td class="whitespace-nowrap text-center px-6 py-4">
-                                    <a href="#" wire:click="edit({{ $document_type->id }})" class="me-1">
+                                    <a href="#" wire:key="edit-{{ $document_type->id }}" wire:click="edit({{ $document_type->id }})" class="me-1">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>
-                                    <a href="#" wire:click="setDeleteId({{ $document_type->id }})">
+                                    <a href="#" wire:key="delete-{{ $document_type->id }}" wire:click="setDeleteId({{ $document_type->id }})">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </td>

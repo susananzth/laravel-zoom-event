@@ -34,10 +34,10 @@
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $country->iso_number }}</td>
                                 <td class="whitespace-nowrap border-r px-6 py-4">{{ $country->phone_code }}</td>
                                 <td class="whitespace-nowrap text-center px-6 py-4">
-                                    <a href="#" wire:click="edit({{ $country->id }})" class="me-1">
+                                    <a href="#" wire:key="edit-{{ $country->id }}" wire:click="edit({{ $country->id }})" class="me-1">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>
-                                    <a href="#" wire:click="setDeleteId({{ $country->id }})">
+                                    <a href="#" wire:key="delete-{{ $country->id }}" wire:click="setDeleteId({{ $country->id }})">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </td>
