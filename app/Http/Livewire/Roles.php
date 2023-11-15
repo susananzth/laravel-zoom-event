@@ -162,7 +162,6 @@ class Roles extends Component
 
         $this->permissions = $permisions;
         return view('role.edit');
-        }
     }
 
     public function update()
