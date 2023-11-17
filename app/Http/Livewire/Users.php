@@ -17,7 +17,7 @@ class Users extends Component
 {
     use WithPagination;
 
-    public $first_name, $last_name, $documents, $document_type_id, $document_number, $phone_codes, $phone_code_id, $phone, $status, $email, $password, $password_confirmation, $user_id;
+    public $first_name, $last_name, $documents, $document_type_id, $document_number, $countries, $country_id, $states, $state_id, $cities, $city_id, $address, $phone_codes, $phone_code_id, $phone, $status, $email, $password, $password_confirmation, $user_id;
     public $addUser = false, $updateUser = false, $deleteUser = false;
 
     protected $listeners = ['render'];
@@ -34,6 +34,13 @@ class Users extends Component
         $this->documents = '';
         $this->document_type_id = '';
         $this->document_number = '';
+        $this->countries = '';
+        $this->country_id = '';
+        $this->states = '';
+        $this->state_id = '';
+        $this->cities = '';
+        $this->city_id = '';
+        $this->address = '';
         $this->phone_codes = '';
         $this->phone_code_id = '';
         $this->phone = '';
@@ -75,9 +82,10 @@ class Users extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
-        $this->phone_codes  = Country::orderBy('name', 'asc')->get();
-        $this->documents  = DocumentType::orderBy('name', 'asc')->get();
-        $this->addUser = true;
+        $this->phone_codes = Country::orderBy('name', 'asc')->get();
+        $this->countries   = $this->phone_codes;
+        $this->documents   = DocumentType::orderBy('name', 'asc')->get();
+        $this->addUser     = true;
         return view('user.create');
     }
 
@@ -96,6 +104,8 @@ class Users extends Component
             'last_name'        => Str::title($this->last_name),
             'document_type_id' => $this->document_type_id,
             'document_number'  => $this->document_number,
+            'city_id'          => $this->city_id,
+            'address'          => $this->address,
             'phone_code_id'    => $this->phone_code_id,
             'phone'            => $this->phone,
             'email'            => Str::lower($this->email),
@@ -131,7 +141,14 @@ class Users extends Component
         $this->documents        = DocumentType::orderBy('name', 'asc')->get();
         $this->document_type_id = $user->document_type_id;
         $this->document_number  = $user->document_number;
-        $this->phone_codes      = Country::orderBy('name', 'asc')->get();
+        $this->city_id          = $user->city_id;
+        $this->cities           = City::where('state_id', $user->city->state_id)->orderBy('name', 'asc')->get();
+        $this->state_id         = $user->city->state_id;
+        $this->states           = State::where('country_id', $user->city->state->country_id)->orderBy('name', 'asc')->get();
+        $this->country_id       = $user->city->state->country_id;
+        $this->countries        = Country::orderBy('name', 'asc')->get();
+        $this->address          = $user->address;
+        $this->phone_codes      = $this->countries;
         $this->phone_code_id    = $user->phone_code_id;
         $this->phone            = $user->phone;
         $this->status           = $user->status;
@@ -162,6 +179,8 @@ class Users extends Component
         $user->last_name        = Str::title($this->last_name);
         $user->document_type_id = $this->document_type_id;
         $user->document_number  = $this->document_number;
+        $user->city_id          = $this->city_id;
+        $user->address          = $this->address;
         $user->phone_code_id    = $this->phone_code_id;
         $user->phone            = $this->phone;
         $user->status           = $this->status;

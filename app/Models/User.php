@@ -24,6 +24,8 @@ class User extends Authenticatable
         'last_name',
         'document_type_id',
         'document_number',
+        'city_id',
+        'address',
         'phone_code_id',
         'phone',
         'email',
@@ -59,6 +61,14 @@ class User extends Authenticatable
                 $user->roles()->attach(3);
             }
         });
+    }
+
+    /**
+     * Get the city that owns the user.
+     */
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 
     /**

@@ -48,6 +48,48 @@
             <x-input-error :messages="$errors->get('document_number')" class="mt-2" />
         </div>
 
+        <div class="col-span-2">
+            <x-input-label for="country_id">{{ __('Country') }} *</x-input-label>
+            <x-select-input id="country_id" class="block mt-1 w-full" 
+                name="country_id" wire:model="country_id" required autocomplete="off">
+                <option value="">{{ __('Please select') }}</option>
+                @foreach ($countries as $item)
+                    @if (old('country_id') == $item->id)
+                    <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                    @else
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endif
+                @endforeach
+            </x-select-input>
+            <x-input-error :messages="$errors->get('country_id')" class="mt-2" />
+        </div>
+
+        <div>
+            <x-input-label for="state_id">{{ __('State') }} *</x-input-label>
+            <x-select-input id="state_id" class="block mt-1 w-full" 
+                name="state_id" wire:model="state_id" required autocomplete="off">
+                <option value="">{{ __('Please select') }}</option>
+            </x-select-input>
+            <x-input-error :messages="$errors->get('state_id')" class="mt-2" />
+        </div>
+
+        <div>
+            <x-input-label for="city_id">{{ __('City') }} *</x-input-label>
+            <x-select-input id="city_id" class="block mt-1 w-full" 
+                name="city_id" wire:model="city_id" required autocomplete="off">
+                <option value="">{{ __('Please select') }}</option>
+            </x-select-input>
+            <x-input-error :messages="$errors->get('city_id')" class="mt-2" />
+        </div>
+
+        <div class="col-span-2">
+            <x-input-label for="address">{{ __('Address') }} *</x-input-label>
+            <x-text-input id="address" class="block mt-1 w-full" type="text"
+                name="address" :value="old('address')" wire:model="address" 
+                maxlength="50" required autocomplete="off" />
+            <x-input-error :messages="$errors->get('address')" class="mt-2" />
+        </div>
+
         <div>
             <x-input-label for="phone_code_id">{{ __('Phone code') }} *</x-input-label>
             <x-select-input id="phone_code_id" class="block mt-1 w-full" 
