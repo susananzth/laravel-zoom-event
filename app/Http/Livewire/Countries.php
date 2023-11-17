@@ -87,10 +87,10 @@ class Countries extends Component
         ]);
         $country->save();
         DB::commit();
-        session()->flash('message', trans('message.Created Successfully.', ['name' => __('Country')]));
-        session()->flash('alert_class', 'success');
 
-        return redirect()->to('/country');
+        return redirect()->route('countries')
+            ->with('message', trans('message.Created Successfully.', ['name' => __('Country')]))
+            ->with('alert_class', 'success');
     }
 
 
@@ -105,19 +105,19 @@ class Countries extends Component
         $country = Country::find($id);
 
         if (!$country) {
-            session()->flash('error','Country not found');
-            return redirect()->to('/country');
-        } else {
-            $this->resetValidationAndFields();
-            $this->country_id    = $country->id;
-            $this->name          = $country->name;
-            $this->iso_2         = $country->iso_2;
-            $this->iso_3         = $country->iso_3;
-            $this->iso_number    = $country->iso_number;
-            $this->phone_code    = $country->phone_code;
-            $this->updateCountry = true;
-            return view('country.edit');
+            return redirect()->route('countries')
+                ->with('message', 'Country not found')
+                ->with('alert_class', 'danger');
         }
+        $this->resetValidationAndFields();
+        $this->country_id    = $country->id;
+        $this->name          = $country->name;
+        $this->iso_2         = $country->iso_2;
+        $this->iso_3         = $country->iso_3;
+        $this->iso_number    = $country->iso_number;
+        $this->phone_code    = $country->phone_code;
+        $this->updateCountry = true;
+        return view('country.edit');
     }
 
     public function update()
@@ -130,8 +130,13 @@ class Countries extends Component
 
         $this->validate();
 
+        $country = Country::find($this->country_id);
+        if (!$country) {
+            return redirect()->route('countries')
+                ->with('message', 'Country not found')
+                ->with('alert_class', 'danger');
+        }
         DB::beginTransaction();
-        $country             = Country::find($this->country_id);
         $country->name       = $this->name;
         $country->iso_2      = $this->iso_2;
         $country->iso_3      = $this->iso_3;
@@ -139,10 +144,10 @@ class Countries extends Component
         $country->phone_code = $this->phone_code;
         $country->save();
         DB::commit();
-        session()->flash('message', trans('message.Updated Successfully.', ['name' => __('Country')]));
-        session()->flash('alert_class', 'success');
-        
-        return redirect()->to('/country');
+
+        return redirect()->route('countries')
+            ->with('message', trans('message.Updated Successfully.', ['name' => __('Country')]))
+            ->with('alert_class', 'success');
     }
 
     public function cancel()
@@ -160,13 +165,13 @@ class Countries extends Component
 
         $country = Country::find($id);
         if (!$country) {
-            session()->flash('error','Country not found');
-            return redirect()->to('/country');
-        } else {
-            $this->country_id = $country->id;
-            $this->resetValidationAndFields();
-            $this->deleteCountry = true;
+            return redirect()->route('countries')
+                ->with('message', 'Country not found')
+                ->with('alert_class', 'danger');
         }
+        $this->country_id = $country->id;
+        $this->resetValidationAndFields();
+        $this->deleteCountry = true;
     }
 
     public function delete()
@@ -176,12 +181,19 @@ class Countries extends Component
                 ->with('message', trans('message.You do not have the necessary permissions to execute the action.'))
                 ->with('alert_class', 'danger');
         }
-        DB::beginTransaction();
-        Country::findOrFail($this->country_id)->delete();
-        DB::commit();
-        session()->flash('message', trans('message.Deleted Successfully.', ['name' => __('Country')]));
-        session()->flash('alert_class', 'success');
 
-        return redirect()->to('/country');
+        $country = Country::find($this->country_id);
+        if (!$country) {
+            return redirect()->route('countries')
+                ->with('message', 'Country not found')
+                ->with('alert_class', 'danger');
+        }
+        DB::beginTransaction();
+        $country->delete();
+        DB::commit();
+
+        return redirect()->route('countries')
+            ->with('message', trans('message.Deleted Successfully.', ['name' => __('Country')]))
+            ->with('alert_class', 'success');
     }
 }

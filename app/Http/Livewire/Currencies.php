@@ -87,10 +87,10 @@ class Currencies extends Component
         $currency->countries()->attach($this->countries);
         $currency->save();
         DB::commit();
-        session()->flash('message', trans('message.Created Successfully.', ['name' => __('Currency')]));
-        session()->flash('alert_class', 'success');
 
-        return redirect()->to('/currency');
+        return redirect()->route('currencies')
+            ->with('message', trans('message.Created Successfully.', ['name' => __('Currency')]))
+            ->with('alert_class', 'success');
     }
 
 
@@ -105,18 +105,18 @@ class Currencies extends Component
         $currency = Currency::find($id);
 
         if (!$currency) {
-            session()->flash('error', 'Currency not found');
-            return redirect()->to('/currency');
-        } else {
-            $this->resetValidationAndFields();
-            $this->currency_id    = $currency->id;
-            $this->name           = $currency->name;
-            $this->iso_4          = $currency->iso_4;
-            $this->symbol         = $currency->symbol;
-            $this->countries      = Country::orderBy('name', 'asc')->get();
-            $this->updateCurrency = true;
-            return view('currency.edit');
+            return redirect()->route('currencies')
+                ->with('message', 'Currency not found')
+                ->with('alert_class', 'danger');
         }
+        $this->resetValidationAndFields();
+        $this->currency_id    = $currency->id;
+        $this->name           = $currency->name;
+        $this->iso_4          = $currency->iso_4;
+        $this->symbol         = $currency->symbol;
+        $this->countries      = Country::orderBy('name', 'asc')->get();
+        $this->updateCurrency = true;
+        return view('currency.edit');
     }
 
     public function update()
@@ -129,18 +129,23 @@ class Currencies extends Component
 
         $this->validate();
 
+        $currency = Currency::find($this->currency_id);
+        if (!$currency) {
+            return redirect()->route('currencies')
+                ->with('message', 'Currency not found')
+                ->with('alert_class', 'danger');
+        }
         DB::beginTransaction();
-        $currency         = Currency::find($this->currency_id);
         $currency->name   = $this->name;
         $currency->iso_4  = $this->iso_4;
         $currency->symbol = $this->symbol;
         $currency->countries()->attach($this->countries);
         $currency->save();
         DB::commit();
-        session()->flash('message', trans('message.Updated Successfully.', ['name' => __('Currency')]));
-        session()->flash('alert_class', 'success');
 
-        return redirect()->to('/currency');
+        return redirect()->route('currencies')
+            ->with('message', trans('message.Updated Successfully.', ['name' => __('Currency')]))
+            ->with('alert_class', 'success');
     }
 
     public function cancel()
@@ -158,13 +163,13 @@ class Currencies extends Component
 
         $currency = Currency::find($id);
         if (!$currency) {
-            session()->flash('error', 'Currency not found');
-            return redirect()->to('/currency');
-        } else {
-            $this->currency_id = $currency->id;
-            $this->resetValidationAndFields();
-            $this->deleteCurrency = true;
+            return redirect()->route('currencies')
+                ->with('message', 'Currency not found')
+                ->with('alert_class', 'danger');
         }
+        $this->currency_id = $currency->id;
+        $this->resetValidationAndFields();
+        $this->deleteCurrency = true;
     }
 
     public function delete()
@@ -174,12 +179,19 @@ class Currencies extends Component
                 ->with('message', trans('message.You do not have the necessary permissions to execute the action.'))
                 ->with('alert_class', 'danger');
         }
-        DB::beginTransaction();
-        Currency::findOrFail($this->currency_id)->delete();
-        DB::commit();
-        session()->flash('message', trans('message.Deleted Successfully.', ['name' => __('Currency')]));
-        session()->flash('alert_class', 'success');
+        $currency = Currency::find($this->currency_id);
+        if (!$currency) {
+            return redirect()->route('currencies')
+                ->with('message', 'Currency not found')
+                ->with('alert_class', 'danger');
+        }
 
-        return redirect()->to('/currency');
+        DB::beginTransaction();
+        $currency->delete();
+        DB::commit();
+
+        return redirect()->route('currencies')
+            ->with('message', trans('message.Deleted Successfully.', ['name' => __('Currency')]))
+            ->with('alert_class', 'success');
     }
 }
