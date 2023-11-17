@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('role_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Role::class)->constrained()->onUpdate('cascade')
-            ->onDelete('cascade');
-            $table->foreignIdFor(User::class)->constrained()->onUpdate('cascade')
-            ->onDelete('cascade');
+            $table->foreignIdFor(Role::class)->constrained()
+                ->onUpdate('restrict')->onDelete('restrict');
+            $table->foreignIdFor(User::class)->constrained()
+                ->onUpdate('restrict')->onDelete('restrict');
             $table->timestamps();
         });
     }
