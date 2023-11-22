@@ -55,32 +55,42 @@
                 <option value="">{{ __('Please select') }}</option>
                 @foreach ($countries as $item)
                     @if (old('country_id') == $item->id)
-                    <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                    <option wire:key="country_{{ $item->id }}" value="{{ $item->id }}" selected>{{ $item->name }}</option>
                     @else
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    <option wire:key="country_{{ $item->id }}" value="{{ $item->id }}">{{ $item->name }}</option>
                     @endif
                 @endforeach
             </x-select-input>
             <x-input-error :messages="$errors->get('country_id')" class="mt-2" />
         </div>
 
+        @if($country_id)
         <div>
             <x-input-label for="state_id">{{ __('State') }} *</x-input-label>
-            <x-select-input id="state_id" class="block mt-1 w-full" 
+            <x-select-input id="state_id" class="block mt-1 w-full" :disabled="empty($country_id)" 
                 name="state_id" wire:model="state_id" required autocomplete="off">
                 <option value="">{{ __('Please select') }}</option>
+                @foreach ($states as $state)
+                    <option wire:key="state_{{ $item->id }}" value="{{ $state->id }}">{{ $state->name }}</option>
+                @endforeach
             </x-select-input>
             <x-input-error :messages="$errors->get('state_id')" class="mt-2" />
         </div>
+        @endif
 
+        @if ($state_id)
         <div>
             <x-input-label for="city_id">{{ __('City') }} *</x-input-label>
-            <x-select-input id="city_id" class="block mt-1 w-full" 
+            <x-select-input id="city_id" class="block mt-1 w-full" :disabled="empty($state_id)" 
                 name="city_id" wire:model="city_id" required autocomplete="off">
                 <option value="">{{ __('Please select') }}</option>
+                @foreach ($cities as $city)
+                    <option wire:key="city_{{ $item->id }}" value="{{ $city->id }}">{{ $city->name }}</option>
+                @endforeach
             </x-select-input>
             <x-input-error :messages="$errors->get('city_id')" class="mt-2" />
         </div>
+        @endif
 
         <div class="col-span-2">
             <x-input-label for="address">{{ __('Address') }} *</x-input-label>

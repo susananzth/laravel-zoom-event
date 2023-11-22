@@ -4,8 +4,10 @@ namespace App\Http\Livewire;
 
 use DB;
 use App\Http\Requests\UserRequest;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\DocumentType;
+use App\Models\State;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -31,17 +33,17 @@ class Users extends Component
     {
         $this->first_name = '';
         $this->last_name = '';
-        $this->documents = '';
+        $this->documents = [];
         $this->document_type_id = '';
         $this->document_number = '';
-        $this->countries = '';
+        $this->countries = [];
         $this->country_id = '';
-        $this->states = '';
+        $this->states = [];
         $this->state_id = '';
-        $this->cities = '';
+        $this->cities = [];
         $this->city_id = '';
         $this->address = '';
-        $this->phone_codes = '';
+        $this->phone_codes = [];
         $this->phone_code_id = '';
         $this->phone = '';
         $this->status = '';
