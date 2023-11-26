@@ -7,6 +7,7 @@ use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,6 +20,7 @@ class Roles extends Component
 
     protected $listeners = ['render'];
 
+    #[Title('Roles')]
     public function rules()
     {
         return RoleRequest::rules($this->role_id);

@@ -6,6 +6,7 @@ use DB;
 use App\Http\Requests\CountryRequest;
 use App\Models\Country;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,6 +19,7 @@ class Countries extends Component
 
     protected $listeners = ['render'];
 
+    #[Title('Countries')]
     public function rules()
     {
         return CountryRequest::rules($this->country_id);

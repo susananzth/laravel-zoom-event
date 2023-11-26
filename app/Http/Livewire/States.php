@@ -7,6 +7,7 @@ use App\Http\Requests\StateRequest;
 use App\Models\Country;
 use App\Models\State;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,6 +20,7 @@ class States extends Component
 
     protected $listeners = ['render'];
 
+    #[Title('States')]
     public function rules()
     {
         return StateRequest::rules($this->state_id);

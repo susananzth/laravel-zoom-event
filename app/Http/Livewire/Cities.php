@@ -7,6 +7,7 @@ use App\Http\Requests\CityRequest;
 use App\Models\City;
 use App\Models\State;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,6 +20,7 @@ class Cities extends Component
 
     protected $listeners = ['render'];
 
+    #[Title('Cities')]
     public function rules()
     {
         return CityRequest::rules($this->state_id, $this->city_id);

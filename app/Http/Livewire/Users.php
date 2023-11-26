@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,6 +25,7 @@ class Users extends Component
 
     protected $listeners = ['render'];
 
+    #[Title('Users')]
     public function rules()
     {
         return UserRequest::rules($this->user_id);

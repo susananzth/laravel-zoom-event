@@ -7,6 +7,7 @@ use App\Http\Requests\CurrencyRequest;
 use App\Models\Country;
 use App\Models\Currency;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,6 +20,7 @@ class Currencies extends Component
 
     protected $listeners = ['render'];
 
+    #[Title('Currencies')]
     public function rules()
     {
         return CurrencyRequest::rules($this->currency_id);

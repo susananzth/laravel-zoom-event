@@ -6,6 +6,7 @@ use DB;
 use App\Http\Requests\DocumentTypeRequest;
 use App\Models\DocumentType;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,6 +19,7 @@ class DocumentTypes extends Component
 
     protected $listeners = ['render'];
 
+    #[Title('Document Types')]
     public function rules()
     {
         return DocumentTypeRequest::rules($this->document_type_id);
