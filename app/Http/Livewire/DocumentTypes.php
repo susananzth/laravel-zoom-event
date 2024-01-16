@@ -82,7 +82,7 @@ class DocumentTypes extends Component
         ]);
         $document_type->save();
         DB::commit();
-        return redirect()->route('documents')
+        return redirect()->route('document_types')
             ->with('message', trans('message.Created Successfully.', ['name' => __('Document Type')]))
             ->with('alert_class', 'success');
     }
@@ -99,7 +99,7 @@ class DocumentTypes extends Component
         $document_type = DocumentType::find($id);
 
         if (!$document_type) {
-            return redirect()->route('documents')
+            return redirect()->route('document_types')
                 ->with('message', __('Document Type not found'))
                 ->with('alert_class', 'danger');
         }
@@ -123,7 +123,7 @@ class DocumentTypes extends Component
 
         $document_type = DocumentType::find($this->document_type_id);
         if (!$document_type) {
-            return redirect()->route('documents')
+            return redirect()->route('document_types')
                 ->with('message', __('Document Type not found'))
                 ->with('alert_class', 'danger');
         }
@@ -134,7 +134,7 @@ class DocumentTypes extends Component
         $document_type->save();
         DB::commit();
 
-        return redirect()->route('documents')
+        return redirect()->route('document_types')
             ->with('message', trans('message.Updated Successfully.', ['name' => __('Document Type')]))
             ->with('alert_class', 'success');
     }
@@ -154,7 +154,7 @@ class DocumentTypes extends Component
 
         $document_type = DocumentType::find($id);
         if (!$document_type) {
-            return redirect()->route('documents')
+            return redirect()->route('document_types')
                 ->with('message', __('Document Type not found'))
                 ->with('alert_class', 'danger');
         }
@@ -173,7 +173,7 @@ class DocumentTypes extends Component
         }
         $document_type = DocumentType::find($this->document_type_id);
         if (!$document_type) {
-            return redirect()->route('documents')
+            return redirect()->route('document_types')
                 ->with('message', __('Document Type not found'))
                 ->with('alert_class', 'danger');
         }
@@ -182,7 +182,7 @@ class DocumentTypes extends Component
         $document_type->delete();
         DB::commit();
 
-        return redirect()->route('documents')
+        return redirect()->route('document_types')
             ->with('message', trans('message.Deleted Successfully.', ['name' => __('Document Type')]))
             ->with('alert_class', 'success');
     }
