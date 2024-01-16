@@ -18,7 +18,7 @@
 
     <x-modal-alpi name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable
         :title="__('Are you sure you want to delete your account?')" :maxWidth="'md'">
-        <form method="post" action="{{ route('profile.destroy') }}">
+        <form method="post">
             @csrf
             @method('delete')
 
@@ -46,7 +46,7 @@
                     <i class="fa-solid fa-ban me-1"></i>{{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button class="ml-3">
+                <x-danger-button  type="button" wire:click.prevent="delete()" class="ml-3">
                     <i class="fa-solid fa-trash me-1"></i>{{ __('Delete Account') }}
                 </x-danger-button>
             </div>
