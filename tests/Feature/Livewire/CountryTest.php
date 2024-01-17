@@ -29,7 +29,7 @@ class CountryTest extends TestCase
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);
-        
+
         $country = Country::factory()->create();
 
         Livewire::actingAs($user)
@@ -65,7 +65,7 @@ class CountryTest extends TestCase
             ->call('store')
             ->assertStatus(200)
             ->assertRedirect('/country');
-        
+
         Livewire::actingAs($user)
             ->test(Countries::class)
             ->assertSee('Nuevo')
@@ -76,7 +76,7 @@ class CountryTest extends TestCase
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);
-        
+
         $country = Country::factory()->create();
 
         Livewire::actingAs($user)
@@ -104,15 +104,15 @@ class CountryTest extends TestCase
             ->call('update')
             ->assertStatus(200)
             ->assertRedirect('/country');
-        
+
         Livewire::actingAs($user)
             ->test(Countries::class)
             ->call('edit', $country->id)
             ->assertSee('name', 'Nuevo')
-            ->set('iso_2', '12')
-            ->set('iso_3', '12')
-            ->set('iso_number', '123')
-            ->set('phone_code', '123')
+            ->assertSee('iso_2', '12')
+            ->assertSee('iso_3', '12')
+            ->assertSee('iso_number', '123')
+            ->assertSee('phone_code', '123')
             ->assertStatus(200);
     }
 

@@ -66,7 +66,7 @@ class RolesTest extends TestCase
             ->call('store')
             ->assertStatus(200)
             ->assertRedirect('/role');
-        
+
         Livewire::actingAs($user)
             ->test(Roles::class)
             ->assertSee('Super super Admin')
@@ -77,7 +77,7 @@ class RolesTest extends TestCase
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);
-        
+
         $role = Role::factory()->create();
         $permission =  Permission::inRandomOrder()->first();
 
@@ -106,7 +106,7 @@ class RolesTest extends TestCase
             ->call('update')
             ->assertStatus(200)
             ->assertRedirect('/role');
-        
+
         Livewire::actingAs($user)
             ->test(Roles::class)
             ->call('edit', $role->id)

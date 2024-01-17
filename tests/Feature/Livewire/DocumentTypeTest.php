@@ -29,7 +29,7 @@ class DocumentTypeTest extends TestCase
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);
-        
+
         $document_type = DocumentType::factory()->create();
 
         Livewire::actingAs($user)
@@ -61,7 +61,7 @@ class DocumentTypeTest extends TestCase
             ->call('store')
             ->assertStatus(200)
             ->assertRedirect('/document');
-        
+
         Livewire::actingAs($user)
             ->test(DocumentTypes::class)
             ->assertSee('Nuevo')
@@ -72,7 +72,7 @@ class DocumentTypeTest extends TestCase
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);
-        
+
         $document_type = DocumentType::factory()->create();
 
         Livewire::actingAs($user)
@@ -97,7 +97,7 @@ class DocumentTypeTest extends TestCase
             ->call('update')
             ->assertStatus(200)
             ->assertRedirect('/document');
-        
+
         Livewire::actingAs($user)
             ->test(DocumentTypes::class)
             ->call('edit', $document_type->id)
