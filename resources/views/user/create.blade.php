@@ -51,7 +51,8 @@
         <div class="col-span-2">
             <x-input-label for="country_id">{{ __('Country') }} *</x-input-label>
             <x-select-input id="country_id" class="block mt-1 w-full" 
-                name="country_id" wire:model="country_id" required autocomplete="off">
+                name="country_id" wire:model="country_id" required autocomplete="off" 
+                wire:change="countryChange($event.target.value)">
                 <option value="">{{ __('Please select') }}</option>
                 @foreach ($countries as $item)
                     @if (old('country_id') == $item->id)
@@ -64,11 +65,11 @@
             <x-input-error :messages="$errors->get('country_id')" class="mt-2" />
         </div>
 
-        @if($country_id)
         <div>
             <x-input-label for="state_id">{{ __('State') }} *</x-input-label>
             <x-select-input id="state_id" class="block mt-1 w-full" :disabled="empty($country_id)" 
-                name="state_id" wire:model="state_id" required autocomplete="off">
+                name="state_id" wire:model="state_id" required autocomplete="off" 
+                wire:change="stateChange($event.target.value)">
                 <option value="">{{ __('Please select') }}</option>
                 @foreach ($states as $state)
                     <option wire:key="state_{{ $item->id }}" value="{{ $state->id }}">{{ $state->name }}</option>
@@ -76,9 +77,7 @@
             </x-select-input>
             <x-input-error :messages="$errors->get('state_id')" class="mt-2" />
         </div>
-        @endif
 
-        @if ($state_id)
         <div>
             <x-input-label for="city_id">{{ __('City') }} *</x-input-label>
             <x-select-input id="city_id" class="block mt-1 w-full" :disabled="empty($state_id)" 
@@ -90,7 +89,6 @@
             </x-select-input>
             <x-input-error :messages="$errors->get('city_id')" class="mt-2" />
         </div>
-        @endif
 
         <div class="col-span-2">
             <x-input-label for="address">{{ __('Address') }} *</x-input-label>

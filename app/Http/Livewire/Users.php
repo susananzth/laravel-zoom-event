@@ -93,6 +93,28 @@ class Users extends Component
         return view('user.create');
     }
 
+    public function countryChange($country_id)
+    {
+        if ($country_id != '') {
+            $this->states = State::where('country_id', $country_id)->get();
+        } else {
+            $this->states = [];
+            $this->state_id = '';
+            $this->cities = [];
+            $this->city_id = '';
+        }
+    }
+
+    public function stateChange($state_id)
+    {
+        if ($state_id != '') {
+            $this->cities = City::where('state_id', $state_id)->get();
+        } else {
+            $this->cities = [];
+            $this->city_id = '';
+        }
+    }
+
     public function store()
     {
         if (Gate::denies('user_add')) {
@@ -239,6 +261,7 @@ class Users extends Component
                 ->with('alert_class', 'danger');
         }
         DB::beginTransaction();
+        $user->roles()->detach();
         $user->delete();
         DB::commit();
 
