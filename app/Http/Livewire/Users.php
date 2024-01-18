@@ -86,6 +86,7 @@ class Users extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->user_id     = '';
         $this->phone_codes = Country::orderBy('name', 'asc')->get();
         $this->countries   = $this->phone_codes;
         $this->documents   = DocumentType::orderBy('name', 'asc')->get();

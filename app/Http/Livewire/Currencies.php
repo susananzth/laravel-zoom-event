@@ -66,6 +66,7 @@ class Currencies extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->currency_id = '';
         $this->countries  = Country::orderBy('name', 'asc')->get();
         $this->addCurrency = true;
         return view('currency.create');
@@ -94,7 +95,6 @@ class Currencies extends Component
             ->with('message', trans('message.Created Successfully.', ['name' => __('Currency')]))
             ->with('alert_class', 'success');
     }
-
 
     public function edit($id)
     {

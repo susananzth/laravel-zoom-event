@@ -66,8 +66,9 @@ class States extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->state_id  = '';
         $this->countries = Country::orderBy('name', 'asc')->get();
-        $this->addState = true;
+        $this->addState  = true;
         return view('state.create');
     }
 

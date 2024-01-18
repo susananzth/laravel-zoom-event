@@ -66,6 +66,7 @@ class Countries extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->country_id = '';
         $this->addCountry = true;
         return view('country.create');
     }
@@ -94,7 +95,6 @@ class Countries extends Component
             ->with('message', trans('message.Created Successfully.', ['name' => __('Country')]))
             ->with('alert_class', 'success');
     }
-
 
     public function edit($id)
     {

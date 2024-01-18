@@ -65,6 +65,7 @@ class Cities extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->city_id = '';
         $this->states  = State::orderBy('name', 'asc')->get();
         $this->addCity = true;
         return view('city.create');

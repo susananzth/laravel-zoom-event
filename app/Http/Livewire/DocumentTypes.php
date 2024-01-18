@@ -63,6 +63,7 @@ class DocumentTypes extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->document_type_id = '';
         $this->addDocumentType = true;
         return view('document_type.create');
     }
@@ -86,7 +87,6 @@ class DocumentTypes extends Component
             ->with('message', trans('message.Created Successfully.', ['name' => __('Document Type')]))
             ->with('alert_class', 'success');
     }
-
 
     public function edit($id)
     {

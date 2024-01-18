@@ -66,6 +66,7 @@ class Roles extends Component
                 ->with('alert_class', 'danger');
         }
         $this->resetValidationAndFields();
+        $this->role_id = '';
         $this->addRol = true;
         $list_permissions = Permission::orderBy('menu', 'asc')->get();
 
@@ -216,8 +217,7 @@ class Roles extends Component
                 ->with('alert_class', 'danger');
         }
         $this->role_id = $role->id;
-        $this->addRol = false;
-        $this->updateRol = false;
+        $this->resetValidationAndFields();
         $this->deleteRol = true;
     }
 
