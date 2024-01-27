@@ -4,22 +4,31 @@ namespace App\Http\Livewire;
 
 use DB;
 
-use App\Models\User;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\DocumentType;
+use App\Models\State;
+use App\Models\User;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Profiles extends Component
 {
-    public $user, $first_name, $last_name, $documents, $document_type_id, $document_number, $countries, $country_id, $states, $state_id, $cities, $city_id, $address, $phone_codes, $phone_code_id, $phone, $email, $user_id, $current_password, $password, $password_confirmation;
+    use WithFileUploads;
+
+    public $user, $first_name, $last_name, $image, $imageEdit, $documents, $document_type_id, $document_number;
+    public $countries, $country_id, $states, $state_id, $cities, $city_id, $address;
+    public $phone_codes, $phone_code_id, $phone, $email, $user_id;
+    public $current_password, $password, $password_confirmation, $password_delete;
     public $deleteProfile = false, $update_passowrd = false, $delete_profile = false;
 
     protected $listeners = ['render'];
@@ -48,6 +57,7 @@ class Profiles extends Component
         $this->user_id          = $user->id;
         $this->first_name       = $user->first_name;
         $this->last_name        = $user->last_name;
+        $this->imageEdit        = $user->image->url ?? '';
         $this->documents        = DocumentType::orderBy('name', 'asc')->get();
         $this->document_type_id = $user->document_type_id;
         $this->document_number  = $user->document_number;
@@ -96,11 +106,43 @@ class Profiles extends Component
         }
 
         $user->save();
+
+        if (gettype($this->image) != 'string' && $this->image != '') {
+            $file = $this->image->storePublicly('public/images');
+            $this->image = substr($file, strlen('public/images/'));
+            if (Storage::exists('public/images/'.$user->image->url)) {
+                Storage::delete('public/images/'.$user->image->url);
+            }
+            $user->image->url = $this->image;
+            $user->image->save();
+        }
         DB::commit();
 
         return redirect()->route('profiles')
             ->with('message', trans('message.Updated Successfully.', ['name' => __('Profile')]))
             ->with('alert_class', 'success');
+    }
+
+    public function countryChange($country_id)
+    {
+        if ($country_id != '') {
+            $this->states = State::where('country_id', $country_id)->get();
+        } else {
+            $this->states = [];
+            $this->state_id = '';
+            $this->cities = [];
+            $this->city_id = '';
+        }
+    }
+
+    public function stateChange($state_id)
+    {
+        if ($state_id != '') {
+            $this->cities = City::where('state_id', $state_id)->get();
+        } else {
+            $this->cities = [];
+            $this->city_id = '';
+        }
     }
 
     public function passwordUpdate()
@@ -143,17 +185,19 @@ class Profiles extends Component
                 ->with('alert_class', 'danger');
         }
 
-        dd($request);
-
         DB::beginTransaction();
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+        $validated = $this->validate([ 
+            'password_delete' => ['required', 'current_password'],
         ]);
 
         $user = $request->user();
 
         Auth::logout();
-
+        if ($user->image && Storage::exists('public/images/'.$user->image->url)) {
+            Storage::delete('public/images/'.$user->image->url);
+        }
+        $user->image()->delete();
+        $user->roles()->detach();
         $user->delete();
 
         $request->session()->invalidate();

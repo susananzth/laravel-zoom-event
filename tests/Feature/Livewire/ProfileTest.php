@@ -67,8 +67,7 @@ class ProfileTest extends TestCase
             ->set('password_confirmation', 'newpassword')
             ->call('passwordUpdate')
             ->assertStatus(200)
-            ->assertSessionHasErrors(['current_password' => trans('validation.current_password')])
-            ->assertRedirect('/profiles');
+            ->assertHasErrors('current_password');
     }
 
     public function test_profile_information_can_be_updated(): void
@@ -90,7 +89,7 @@ class ProfileTest extends TestCase
             ->set('address', 'asdasdas')
             ->call('update')
             ->assertStatus(200)
-            ->assertRedirect('/profiles');
+            ->assertHasNoErrors();
 
         Livewire::actingAs($user)
             ->test(Profiles::class)
@@ -100,6 +99,28 @@ class ProfileTest extends TestCase
 
     public function test_delete_account(): void
     {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
 
+        Livewire::actingAs($user)
+            ->test(Profiles::class)
+            ->set('user_id', $user->id)
+            ->set('password_delete', 'password')
+            ->call('delete')
+            ->assertHasNoErrors()
+            ->assertRedirect('/');
+    }
+
+    public function test_correct_password_must_be_provided_to_delete_account(): void
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
+
+        Livewire::actingAs($user)
+            ->test(Profiles::class)
+            ->set('user_id', $user->id)
+            ->set('password_delete', 'wrong-password')
+            ->call('delete')
+            ->assertHasErrors('password_delete');
     }
 }
