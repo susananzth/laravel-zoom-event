@@ -24,6 +24,13 @@
             <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
         </div>
 
+        <div class="col-span-2">
+            <x-input-label for="image">{{ __('Image') }}</x-input-label>
+            <x-input-file id="image" type="file" name="image" wire:model="image" :image="$imageEdit" />
+            <p class="mt-0 text-xs text-gray-500">PNG, JPG o JPEG (MAX. 4MB).</p>
+            <x-input-error :messages="$errors->get('image')" class="mt-2" />
+        </div>
+
         <div>
             <x-input-label for="document_type_id">{{ __('Document number') }} *</x-input-label>
             <x-select-input id="document_type_id" class="block mt-1 w-full" 

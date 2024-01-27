@@ -7,20 +7,25 @@ use App\Http\Requests\UserRequest;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\DocumentType;
+use App\Models\Image;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class Users extends Component
 {
-    use WithPagination;
+    use WithFileUploads, WithPagination;
 
-    public $first_name, $last_name, $documents, $document_type_id, $document_number, $countries, $country_id, $states, $state_id, $cities, $city_id, $address, $phone_codes, $phone_code_id, $phone, $status, $email, $password, $password_confirmation, $user_id;
+    public $first_name, $last_name, $image, $imageEdit, $documents, $document_type_id, $document_number;
+    public $countries, $country_id, $states, $state_id, $cities, $city_id, $address, $phone_codes, $phone_code_id, $phone;
+    public $status, $email, $password, $password_confirmation, $user_id;
     public $addUser = false, $updateUser = false, $deleteUser = false;
 
     protected $listeners = ['render'];
@@ -35,6 +40,8 @@ class Users extends Component
     {
         $this->first_name = '';
         $this->last_name = '';
+        $this->image = '';
+        $this->imageEdit = '';
         $this->documents = [];
         $this->document_type_id = '';
         $this->document_number = '';
@@ -138,7 +145,23 @@ class Users extends Component
             'email'            => Str::lower($this->email),
             'password'         => Hash::make($this->password),
         ]);
+
         $user->save();
+        DB::commit();
+
+        DB::beginTransaction();
+        if ($this->image != '') {
+            if ($user->image) {
+                if (Storage::exists('public/images/'.$user->image->url)) {
+                    Storage::delete('public/images/'.$user->image->url);
+                }
+                $user->image->delete();
+            }
+            $file = $this->image->storePublicly('public/images');
+            $user->image()->create([
+                'url' => substr($file, strlen('public/images/')),
+            ]);
+        }
         DB::commit();
 
         return redirect()->route('users')
@@ -165,6 +188,8 @@ class Users extends Component
         $this->user_id          = $user->id;
         $this->first_name       = $user->first_name;
         $this->last_name        = $user->last_name;
+        $this->image            = $user->image->url;
+        $this->imageEdit        = $user->image->url;
         $this->documents        = DocumentType::orderBy('name', 'asc')->get();
         $this->document_type_id = $user->document_type_id;
         $this->document_number  = $user->document_number;
@@ -201,6 +226,16 @@ class Users extends Component
                 ->with('alert_class', 'danger');
         }
 
+        if (gettype($this->image) != 'string' && $this->image != '') {
+            $file = $this->image->storePublicly('public/images');
+            $this->image = substr($file, strlen('public/images/'));
+            if (Storage::exists('public/images/'.$user->image->url)) {
+                Storage::delete('public/images/'.$user->image->url);
+            }
+        } else {
+            $this->image = $user->image->url;
+        }
+
         DB::beginTransaction();
         $user->first_name       = Str::title($this->first_name);
         $user->last_name        = Str::title($this->last_name);
@@ -212,6 +247,9 @@ class Users extends Component
         $user->phone            = $this->phone;
         $user->status           = $this->status;
         $user->email            = Str::lower($this->email);
+        $user->image->url       = $this->image;
+        $user->image->save();
+
         if (isset($this->password) || $this->password != '') {
             $user->password = Hash::make($this->password);
         }
@@ -261,8 +299,13 @@ class Users extends Component
                 ->with('message', __('User not found'))
                 ->with('alert_class', 'danger');
         }
+        if (Storage::exists('public/images/'.$user->image->url)) {
+            Storage::delete('public/images/'.$user->image->url);
+        }
+
         DB::beginTransaction();
         $user->roles()->detach();
+        $user->image()->delete();
         $user->delete();
         DB::commit();
 

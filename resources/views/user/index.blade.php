@@ -38,7 +38,7 @@
                                     @endif
                                 </x-table-td>
                                 <x-table-td>
-                                    <x-table-buttons id="{{ $user->user_id }}" />
+                                    <x-table-buttons id="{{ $user->id }}" />
                                 </x-table-td>
                             </tr>
                             @empty
